@@ -9,11 +9,17 @@ activate-venv:
 submodules:
 	git submodule update --init --recursive
 
+build-requirements:
+	find . -name 'pyproject.toml' -exec pip-compile --strip-extras -o requirements.txt {} \;
+
+build-requirements-dev:
+	find . -name 'pyproject.toml' -exec pip-compile --strip-extras --extra dev -o requirements-dev.txt {} \;
+
 requirements-dev:
-	find . -name 'requirements-dev.txt' -exec pip install -r {} \;
+	python -m pip install -r requirements-dev.txt
 
 requirements:
-	find . -name 'requirements.txt' -exec pip install -r {} \;
+	python -m pip install -r requirements.txt
 
 test:
 	pytest **/*.py
