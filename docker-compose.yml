@@ -1,0 +1,31 @@
+services:
+  backend:
+    build: ./backend/leapfrogai-backend-ctransformers
+    ports:
+      - "50051:50051"
+    hostname: leapfrogai-ctransformers-backend
+    networks:
+      - backend
+  api:
+    build: ./api/leapfrogai-api
+    ports:
+      - "8080:8080"
+    hostname: leapfrogai-api
+    networks:
+      - backend
+      - frontend
+    volumes:
+      - ./config.yaml:/leapfrogai/config.yaml
+  frontend:
+    build: ./frontend/leapfrog-ui
+    hostname: leapfrog-ui
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend
+    env_file:
+      - .env-demo
+
+networks:
+  backend:
+  frontend:

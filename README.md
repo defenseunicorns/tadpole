@@ -1,6 +1,11 @@
 # Tadpole
 
-``` sh
-docker build -t ghcr.io/defenseunicorns/leapfrogai/tadpole:latest .
-docker run -p 50051:50051 -p 8080:8080 ghcr.io/defenseunicorns/leapfrogai/tadpole:latest
+## Description
+
+This repo is a simple quickstart for LeapfrogAI that brings in several components and runs them with an out-of-the-box configuration.
+
+## Getting Started
+
+``` shell
+make docker-compose
 ```

@@ -9,21 +9,11 @@ activate-venv:
 submodules:
 	git submodule update --init --recursive
 
-build-requirements:
-	find . -name 'pyproject.toml' -exec pip-compile --strip-extras -o requirements.txt {} \;
+docker-compose:
+	docker-compose up -d
 
-build-requirements-dev:
-	find . -name 'pyproject.toml' -exec pip-compile --strip-extras --extra dev -o requirements-dev.txt {} \;
+docker-compose-build:
+	docker-compose build --no-cache
 
-requirements-dev:
-	python -m pip install -r requirements-dev.txt
-
-requirements:
-	python -m pip install -r requirements.txt
-
-test:
-	pytest **/*.py
-
-dev:
-	uvicorn main:app --app-dir ./api/* --port 3000 &
-	find backend/* -name "main.py" -execdir python {} \;
+docker-compose-down:
+	docker-compose down
