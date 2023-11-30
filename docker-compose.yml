@@ -15,7 +15,9 @@ services:
       - backend
       - frontend
     volumes:
-      - ./config.yaml:/leapfrogai/config.yaml
+      - type: bind
+        source: ./config.yaml
+        target: /leapfrogai/config.yaml
   frontend:
     build: ./frontend/leapfrog-ui
     hostname: leapfrog-ui
