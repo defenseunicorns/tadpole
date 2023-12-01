@@ -7,5 +7,7 @@ This repo is a simple quickstart for LeapfrogAI that brings in several component
 ## Getting Started
 
 ``` shell
+make submodules
+make docker-compose-build
 make docker-compose
 ```
