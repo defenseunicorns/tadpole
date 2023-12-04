@@ -1,4 +1,5 @@
 VERSION := $(shell git describe --abbrev=0 --tags)
+ARCH := $(shell uname -m | sed s/aarch64/arm64/ | sed s/x86_64/amd64/)
 
 create-venv:
 	python -m venv .venv
@@ -13,7 +14,10 @@ docker-compose:
 	docker-compose up -d
 
 docker-compose-build:
-	docker-compose build --no-cache
+	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
+		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
+	fi
+	docker-compose build --no-cache --build-arg ARCH=${ARCH}
 
 docker-compose-down:
 	docker-compose down
