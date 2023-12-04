@@ -1,9 +1,9 @@
-[submodule "backend/leapfrogai-backend-ctransformers"]
-	path = backend/leapfrogai-backend-ctransformers
-	url = git@github.com:defenseunicorns/leapfrogai-backend-ctransformers.git
 [submodule "api/leapfrogai-api"]
 	path = api/leapfrogai-api
 	url = git@github.com:defenseunicorns/leapfrogai-api.git
 [submodule "frontend/leapfrog-ui"]
 	path = frontend/leapfrog-ui
 	url = git@github.com:defenseunicorns/leapfrog-ui.git
+[submodule "backend/leapfrogai-backend-llama-cpp-python"]
+	path = backend/leapfrogai-backend-llama-cpp-python
+	url = https://github.com/defenseunicorns/leapfrogai-backend-llama-cpp-python

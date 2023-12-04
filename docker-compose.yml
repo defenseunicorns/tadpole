@@ -1,9 +1,16 @@
+configs:
+  api-config:
+    file: ./config.yaml
+
 services:
   backend:
-    build: ./backend/leapfrogai-backend-ctransformers
+    build:
+      context: ./backend/leapfrogai-backend-llama-cpp-python
+      args:
+        - ARCH=amd64
     ports:
       - "50051:50051"
-    hostname: leapfrogai-ctransformers-backend
+    hostname: leapfrogai-backend
     networks:
       - backend
   api:
@@ -14,10 +21,10 @@ services:
     networks:
       - backend
       - frontend
-    volumes:
-      - type: bind
-        source: ./config.yaml
+    configs:
+      - source: api-config
         target: /leapfrogai/config.yaml
+        mode: 444
   frontend:
     build: ./frontend/leapfrog-ui
     hostname: leapfrog-ui
