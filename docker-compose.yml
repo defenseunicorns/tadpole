@@ -3,11 +3,17 @@ configs:
     file: ./config.yaml
 
 services:
+  backend-transcribe:
+    build:
+      context: ./backend/leapfrogai-backend-whisper
+    ports:
+      - "50052:50051"
+    hostname: leapfrogai-backend-transcribe
+    networks:
+      - backend
   backend:
     build:
       context: ./backend/leapfrogai-backend-llama-cpp-python
-      args:
-        - ARCH=amd64
     ports:
       - "50051:50051"
     hostname: leapfrogai-backend
