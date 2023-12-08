@@ -11,10 +11,10 @@ submodules:
 	git submodule update --init --recursive
 
 docker-compose:
-	docker-compose up -d
+	docker compose up -d
 
 docker-compose-build:
-	docker-compose build --no-cache --build-arg ARCH=${ARCH}
+	docker compose build --no-cache --build-arg ARCH=${ARCH}
 
 docker-compose-down:
-	docker-compose down
+	docker compose down

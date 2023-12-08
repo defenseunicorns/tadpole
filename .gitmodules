@@ -9,4 +9,4 @@
 [submodule "backend/leapfrogai-backend-ctransformers"]
 	path = backend/leapfrogai-backend-ctransformers
 	url = git@github.com:defenseunicorns/leapfrogai-backend-ctransformers.git
-	branch = main
+	branch = add-gpu-support
