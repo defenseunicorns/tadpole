@@ -3,22 +3,22 @@ configs:
     file: ./config.yaml
 
 services:
-  backend-transcribe:
-    build:
-      context: ./backend/leapfrogai-backend-whisper
-    ports:
-      - "50052:50051"
-    hostname: leapfrogai-backend-transcribe
-    networks:
-      - backend
   backend:
     build:
-      context: ./backend/leapfrogai-backend-llama-cpp-python
+      context: ./backend/leapfrogai-backend-ctransformers
+      dockerfile: Dockerfile.gpu
     ports:
       - "50051:50051"
     hostname: leapfrogai-backend
     networks:
       - backend
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
   api:
     build: ./api/leapfrogai-api
     ports:
