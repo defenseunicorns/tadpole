@@ -11,13 +11,13 @@ submodules:
 	git submodule update --init --recursive
 
 docker-compose:
-	docker-compose up -d
+	docker compose up -d
 
 docker-compose-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
 	fi
-	docker-compose build --no-cache --build-arg ARCH=${ARCH}
+	docker compose build --no-cache --build-arg ARCH=${ARCH}
 
 docker-compose-down:
-	docker-compose down
+	docker compose down
