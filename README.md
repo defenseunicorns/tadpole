@@ -25,6 +25,20 @@ Leapfrog-UI will be running at `http://localhost:3000/`.
 
 API Swagger Documentation can be accessed at `http://localhost:8080/docs`.
 
+### Cleanup
+
+When you are done with Tadpole you can run this command to cleanup:
+
+``` shell
+make cleanup
+```
+
+If you have lots of hanging images there is also an unsafe version of the clean command that will remove those as well:
+
+``` shell
+make cleanup-unsafe
+```
+
 ## What's next?
 
 To learn more about the rest of LeapfrogAI, please checkout the [LeapfrogAI GitHub Repo](https://github.com/defenseunicorns/leapfrogai)
