@@ -2,7 +2,14 @@
 
 ## Description
 
-This repo is the fastest way to get started with LeapfrogAI. This has been tested on Mac and Linux. If you run into any issues while following [Getting Started](#getting-started), please open an issue so we can improve the experience for everyone!
+LeapfrogAI is a self-hosted AI platform designed to be deployed in air-gapped environments. Tadpole is the fastest way to get started with LeapfrogAI locally. It runs a docker compose build of the LeapfrogAI API, language backend, and user interface - culminating in a locally hosted "Chat with an LLM" demonstration.
+
+> Disclaimer: This repo exists for demonstration purposes. For advanced production deployments, please select another deployment strategy from the [LeapfrogAI](https://github.com/defenseunicorns/leapfrogai) main repo.
+
+This has been tested on Mac and Linux. If you run into any issues while following [Getting Started](#getting-started) please open an issue:
+
+- [🐛Bug Report🐛](https://github.com/defenseunicorns/tadpole/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=)
+- [💻Feature Request💻](https://github.com/defenseunicorns/tadpole/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=)
 
 ## Getting Started
 
