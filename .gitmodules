@@ -1,12 +1,12 @@
 [submodule "api/leapfrogai-api"]
 	path = api/leapfrogai-api
-	url = git@github.com:defenseunicorns/leapfrogai-api.git
+	url = https://github.com/defenseunicorns/leapfrogai-api.git
 [submodule "frontend/leapfrog-ui"]
 	path = frontend/leapfrog-ui
-	url = git@github.com:defenseunicorns/leapfrog-ui.git
+	url = https://github.com/defenseunicorns/leapfrog-ui.git
 [submodule "backend/leapfrogai-backend-llama-cpp-python"]
 	path = backend/leapfrogai-backend-llama-cpp-python
 	url = https://github.com/defenseunicorns/leapfrogai-backend-llama-cpp-python
 [submodule "backend/leapfrogai-backend-whisper"]
 	path = backend/leapfrogai-backend-whisper
-	url = git@github.com:defenseunicorns/leapfrogai-backend-whisper.git
+	url = https://github.com/defenseunicorns/leapfrogai-backend-whisper.git
