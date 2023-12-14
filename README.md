@@ -13,7 +13,8 @@ This has been tested on Mac and Linux. If you run into any issues while followin
 
 ## Prerequisites
 
-* Docker
+* [Docker](https://www.docker.com/)
+* [Continue.dev](Continue.dev) (For Code Recipe)
 
 ## Getting Started
 
