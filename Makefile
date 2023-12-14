@@ -9,26 +9,27 @@ activate-venv:
 submodules:
 	git submodule update --init --recursive
 
-docker-compose:
-	docker compose up -d
-
-docker-compose-build:
-	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
-		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
-	fi
-	docker compose build --no-cache --build-arg ARCH=${ARCH}
-
 code-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
 	fi
-	docker compose -f docker-compose-code.yml build --no-cache --build-arg ARCH=${ARCH}
+	docker compose -f recipes/code/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
 
 code-up:
-	docker compose -f docker-compose-code.yml up -d
+	docker compose -f recipes/code/docker-compose.yml up -d
+
+chat-build:
+	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
+		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
+	fi
+	docker compose -f recipes/chat/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+
+chat-up:
+	docker compose -f recipes/chat/docker-compose.yml up -d
 
 docker-compose-down:
-	docker compose down
+	docker compose -f recipes/chat/docker-compose.yml down
+	docker compose -f recipes/code/docker-compose.yml down
 
 clean:
 	make docker-compose-down

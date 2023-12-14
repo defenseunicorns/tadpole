@@ -1,11 +1,11 @@
 configs:
   api-config:
-    file: ./code-config.yaml
+    file: ./config.yaml
 
 services:
   backend:
     build:
-      context: ./backend/leapfrogai-backend-llama-cpp-python
+      context: ../../backend/leapfrogai-backend-llama-cpp-python
       args:
         - MODEL_URL=https://huggingface.co/TheBloke/OpenHermes-2.5-Mistral-7B-GGUF/resolve/main/openhermes-2.5-mistral-7b.Q4_K_M.gguf
     ports:
@@ -14,7 +14,7 @@ services:
     networks:
       - backend
   api:
-    build: ./api/leapfrogai-api
+    build: ../../api/leapfrogai-api
     ports:
       - "8080:8080"
     hostname: leapfrogai-api
@@ -26,7 +26,7 @@ services:
         target: /leapfrogai/config.yaml
         mode: 444
   frontend:
-    build: ./frontend/leapfrog-ui
+    build: ../../frontend/leapfrog-ui
     hostname: leapfrog-ui
     ports:
       - "3000:3000"
