@@ -20,21 +20,10 @@ services:
     hostname: leapfrogai-api
     networks:
       - backend
-      - frontend
     configs:
       - source: api-config
         target: /leapfrogai/config.yaml
         mode: 444
-  frontend:
-    build: ../../frontend/leapfrog-ui
-    hostname: leapfrog-ui
-    ports:
-      - "3000:3000"
-    networks:
-      - frontend
-    env_file:
-      - .env-demo
 
 networks:
   backend:
-  frontend:

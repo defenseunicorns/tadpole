@@ -11,26 +11,53 @@ This has been tested on Mac and Linux. If you run into any issues while followin
 - [🐛Bug Report🐛](https://github.com/defenseunicorns/tadpole/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=)
 - [💻Feature Request💻](https://github.com/defenseunicorns/tadpole/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=)
 
+## Prerequisites
+
+* Docker
+
 ## Getting Started
 
-This repo uses git submodules to pull in all the pieces of LeapfrogAI. To initialize all submodules:
+Under the hood this repo uses docker-compose to run all the components. We have provided a simple set of basic recipes to get started with. By running any one of these recipes, Tadpole will automatically build, configure, and start the requisite components.
 
-``` shell
-make submodules
+### Common Components
+
+Regardless of which recipe you pick, API Swagger Documentation can be accessed at `http://localhost:8080/docs`.
+
+### Chat
+
+```shell
+make chat
 ```
-
-The repo uses docker-compose to run all the components. Please use the provided make commands to ensure all configurations are set:
-
-``` shell
-make docker-compose-build
-make docker-compose
-```
-
-### Accessing
 
 Leapfrog-UI will be running at `http://localhost:3000/`.
 
-API Swagger Documentation can be accessed at `http://localhost:8080/docs`.
+### Code
+
+> This recipe is intended for use with a code extension such as [Continue.dev](continue.dev).
+
+To build/run the code backend:
+
+``` shell
+make code
+```
+
+[Continue.dev](continue.dev) Configuration:
+``` json
+{
+  "models":
+  [{
+    "title": "leapfrogai",
+    "provider": "openai",
+    "model": "leapfrogai",
+    "apiKey": "freeTheModels",
+    "apiBase": "http://localhost:8080/openai"
+  }],
+  "modelRoles": 
+  {
+      "default": "leapfrogai"
+  }
+}
+```
 
 ### Cleanup
 

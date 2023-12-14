@@ -9,6 +9,16 @@ activate-venv:
 submodules:
 	git submodule update --init --recursive
 
+code:
+	make submodules
+	make code-build
+	make code-up
+
+chat:
+	make submodules
+	make chat-build
+	make chat-up
+
 code-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
