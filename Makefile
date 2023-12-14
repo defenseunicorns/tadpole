@@ -49,5 +49,5 @@ clean:
 	docker image rm -f tadpole-api 2> /dev/null
 
 clean-unsafe:
-	make clean
+	make docker-compose-down
 	docker image prune -f

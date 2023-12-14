@@ -65,7 +65,7 @@ make code
 When you are done with Tadpole you can run this command to cleanup:
 
 ``` shell
-make cleanup
+make clean
 ```
 
 ## What's next?
