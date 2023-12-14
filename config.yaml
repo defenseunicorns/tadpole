@@ -1,5 +1,5 @@
 models:
-- name: openhermes-2.5-mistral-7b
+- name: leapfrogai
   backend: leapfrogai-backend:50051
 - name: whisper
   backend: leapfrogai-backend-transcribe:50051
