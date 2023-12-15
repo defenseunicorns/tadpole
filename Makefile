@@ -43,9 +43,11 @@ docker-compose-down:
 
 clean:
 	make docker-compose-down
-	docker image rm -f tadpole-frontend 2> /dev/null
-	docker image rm -f tadpole-backend 2> /dev/null
-	docker image rm -f tadpole-api 2> /dev/null
+	docker image rm -f chat-frontend 2> /dev/null
+	docker image rm -f chat-backend 2> /dev/null
+	docker image rm -f chat-api 2> /dev/null
+	docker image rm -f code-backend 2> /dev/null
+	docker image rm -f code-api 2> /dev/null
 
 clean-unsafe:
 	make docker-compose-down
