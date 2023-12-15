@@ -3,24 +3,16 @@ configs:
     file: ./config.yaml
 
 services:
-  backend-transcribe:
-    build:
-      context: ./backend/leapfrogai-backend-whisper
-    ports:
-      - "50052:50051"
-    hostname: leapfrogai-backend-transcribe
-    networks:
-      - backend
   backend:
     build:
-      context: ./backend/leapfrogai-backend-llama-cpp-python
+      context: ../../backend/leapfrogai-backend-llama-cpp-python
     ports:
       - "50051:50051"
     hostname: leapfrogai-backend
     networks:
       - backend
   api:
-    build: ./api/leapfrogai-api
+    build: ../../api/leapfrogai-api
     ports:
       - "8080:8080"
     hostname: leapfrogai-api
@@ -32,7 +24,7 @@ services:
         target: /leapfrogai/config.yaml
         mode: 444
   frontend:
-    build: ./frontend/leapfrog-ui
+    build: ../../frontend/leapfrog-ui
     hostname: leapfrog-ui
     ports:
       - "3000:3000"
