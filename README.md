@@ -34,7 +34,8 @@ Leapfrog-UI will be running at `http://localhost:3000/`.
 
 ### Code
 
-> This recipe is intended for use with a code extension such as [Continue.dev](continue.dev).
+> This recipe is intended for use with a code extension such as [Continue.dev](continue.dev). 
+> Tested with the v0.7.53 prerelease of [Continue.dev](continue.dev).
 
 To build/run the code backend:
 
