@@ -45,7 +45,6 @@ clean:
 	make docker-compose-down
 	docker image rm -f tadpole-frontend 2> /dev/null
 	docker image rm -f tadpole-backend 2> /dev/null
-	docker image rm -f tadpole-backend-transcribe 2> /dev/null
 	docker image rm -f tadpole-api 2> /dev/null
 
 clean-unsafe:
