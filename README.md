@@ -14,7 +14,7 @@ This has been tested on Mac and Linux. If you run into any issues while followin
 ## Prerequisites
 
 * [Docker](https://www.docker.com/)
-* [Continue.dev](Continue.dev) (For Code Recipe)
+* [Continue.dev](https://continue.dev/) (For Code Recipe)
 
 ## Getting Started
 
@@ -34,8 +34,8 @@ Leapfrog-UI will be running at `http://localhost:3000/`.
 
 ### Code
 
-> This recipe is intended for use with a code extension such as [Continue.dev](continue.dev). 
-> Tested with the v0.7.53 prerelease of [Continue.dev](continue.dev).
+> This recipe is intended for use with a code extension such as [Continue.dev](https://continue.dev/). 
+> Tested with the v0.7.53 prerelease of [Continue.dev](https://continue.dev/).
 
 To build/run the code backend:
 
@@ -43,7 +43,7 @@ To build/run the code backend:
 make code
 ```
 
-[Continue.dev](continue.dev) Configuration:
+[Continue.dev](https://continue.dev/) Configuration:
 ``` json
 {
   "models":
