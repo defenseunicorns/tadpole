@@ -1,0 +1,5 @@
+models:
+- name: leapfrogai-language
+  backend: leapfrogai-backend-language:50051
+- name: leapfrogai-transcribe
+  backend: leapfrogai-backend-transcribe:50051

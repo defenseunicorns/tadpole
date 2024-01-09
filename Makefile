@@ -19,6 +19,20 @@ chat:
 	make chat-build
 	make chat-up
 
+magic:
+	make submodules
+	make magic-build
+	make magic-up
+
+magic-build:
+	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
+		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
+	fi
+	docker compose -f recipes/magic/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+
+magic-up:
+	docker compose -f recipes/magic/docker-compose.yml up -d
+
 code-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
@@ -40,6 +54,7 @@ chat-up:
 docker-compose-down:
 	docker compose -f recipes/chat/docker-compose.yml down
 	docker compose -f recipes/code/docker-compose.yml down
+	docker compose -f recipes/magic/docker-compose.yml down
 
 clean:
 	make docker-compose-down
@@ -48,6 +63,9 @@ clean:
 	docker image rm -f chat-api 2> /dev/null
 	docker image rm -f code-backend 2> /dev/null
 	docker image rm -f code-api 2> /dev/null
+	docker image rm -f magic-backend-language 2> /dev/null
+	docker image rm -f magic-api 2> /dev/null
+	docker image rm -f magic-backend-transcribe 2> /dev/null
 
 clean-unsafe:
 	make docker-compose-down
