@@ -19,19 +19,19 @@ chat:
 	make chat-build
 	make chat-up
 
-magic:
+multi-modal:
 	make submodules
-	make magic-build
-	make magic-up
+	make multi-modal-build
+	make multi-modal-up
 
-magic-build:
+multi-modal-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
 	fi
-	docker compose -f recipes/magic/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+	docker compose -f recipes/multi-modal/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
 
-magic-up:
-	docker compose -f recipes/magic/docker-compose.yml up -d
+multi-modal-up:
+	docker compose -f recipes/multi-modal/docker-compose.yml up -d
 
 code-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
@@ -54,7 +54,7 @@ chat-up:
 docker-compose-down:
 	docker compose -f recipes/chat/docker-compose.yml down
 	docker compose -f recipes/code/docker-compose.yml down
-	docker compose -f recipes/magic/docker-compose.yml down
+	docker compose -f recipes/multi-modal/docker-compose.yml down
 
 clean:
 	make docker-compose-down
@@ -63,9 +63,9 @@ clean:
 	docker image rm -f chat-api 2> /dev/null
 	docker image rm -f code-backend 2> /dev/null
 	docker image rm -f code-api 2> /dev/null
-	docker image rm -f magic-backend-language 2> /dev/null
-	docker image rm -f magic-api 2> /dev/null
-	docker image rm -f magic-backend-transcribe 2> /dev/null
+	docker image rm -f multi-modal-backend-language 2> /dev/null
+	docker image rm -f multi-modal-api 2> /dev/null
+	docker image rm -f multi-modal-backend-transcribe 2> /dev/null
 
 clean-unsafe:
 	make docker-compose-down
