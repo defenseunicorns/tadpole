@@ -1,4 +1,5 @@
 ARCH := $(shell uname -m | sed s/aarch64/arm64/ | sed s/x86_64/amd64/)
+UI := http://localhost:3000/
 
 create-venv:
 	python -m venv .venv
@@ -18,6 +19,7 @@ chat:
 	make submodules
 	make chat-build
 	make chat-up
+	echo "Leapfrog UI running at: $(UI)"
 
 code-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
