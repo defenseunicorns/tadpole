@@ -13,12 +13,12 @@ This has been tested on Mac and Linux. If you run into any issues while followin
 
 ## Prerequisites
 
-* [Docker](https://www.docker.com/)
-* [Continue.dev](https://continue.dev/) (For Code Recipe)
+- [Docker](https://www.docker.com/)
+- [Continue.dev](https://continue.dev/) (For Code Recipe)
 
 ## Getting Started
 
-Under the hood this repo uses docker-compose to run all the components. We have provided a simple set of basic recipes to get started with. By running any one of these recipes, Tadpole will automatically build, configure, and start the requisite components.
+Under the hood, this repo uses docker-compose to run all the components. We have provided a simple set of basic recipes to get started with. By running any one of these recipes, Tadpole will automatically build, configure, and start the requisite components.
 
 ### Common Components
 
@@ -34,7 +34,7 @@ Leapfrog-UI will be running at `http://localhost:3000/`.
 
 ### Code
 
-> This recipe is intended for use with a code extension such as [Continue.dev](https://continue.dev/). 
+> This recipe is intended for use with a code extension such as [Continue.dev](https://continue.dev/).
 > Tested with the v0.7.53 prerelease of [Continue.dev](https://continue.dev/).
 
 To build/run the code backend:
@@ -43,7 +43,8 @@ To build/run the code backend:
 make code
 ```
 
-[Continue.dev](https://continue.dev/) Configuration:
+Modify your [Continue.dev](https://continue.dev/) configuration in `$HOME/.continue/config.json` :
+
 ``` json
 {
   "models":
