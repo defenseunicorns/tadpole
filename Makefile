@@ -21,6 +21,12 @@ chat:
 	make chat-up
 	echo "Leapfrog UI running at: $(UI)"
 
+chat-gpu:
+	make submodules
+	make chat-gpu-build
+	make chat-gpu-up
+	echo "Leapfrog UI running at: $(UI)"
+
 code-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
@@ -39,15 +45,29 @@ chat-build:
 chat-up:
 	docker compose -f recipes/chat/docker-compose.yml up -d
 
+chat-gpu-build:
+	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
+		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
+	fi
+	docker compose -f recipes/chat-gpu/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+
+chat-gpu-up:
+	docker compose -f recipes/chat-gpu/docker-compose.yml up -d
+
 docker-compose-down:
 	docker compose -f recipes/chat/docker-compose.yml down
 	docker compose -f recipes/code/docker-compose.yml down
+	docker compose -f recipes/chat-gpu/docker-compose.yml down
+
 
 clean:
 	make docker-compose-down
 	docker image rm -f chat-frontend 2> /dev/null
 	docker image rm -f chat-backend 2> /dev/null
 	docker image rm -f chat-api 2> /dev/null
+	docker image rm -f chat-gpu-frontend 2> /dev/null
+	docker image rm -f chat-gpu-backend 2> /dev/null
+	docker image rm -f chat-gpu-api 2> /dev/null
 	docker image rm -f code-backend 2> /dev/null
 	docker image rm -f code-api 2> /dev/null
 

@@ -1,0 +1,46 @@
+configs:
+  api-config:
+    file: ./config.yaml
+
+services:
+  backend:
+    build:
+      context: ../../backend/leapfrogai-backend-llama-cpp-python
+      dockerfile: ../../backend/leapfrogai-backend-llama-cpp-python/Dockerfile.gpu
+    ports:
+      - "50051:50051"
+    hostname: leapfrogai-backend
+    networks:
+      - backend
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+  api:
+    build: ../../api/leapfrogai-api
+    ports:
+      - "8080:8080"
+    hostname: leapfrogai-api
+    networks:
+      - backend
+      - frontend
+    configs:
+      - source: api-config
+        target: /leapfrogai/config.yaml
+        mode: 444
+  frontend:
+    build: ../../frontend/leapfrog-ui
+    hostname: leapfrog-ui
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend
+    env_file:
+      - .env-demo
+
+networks:
+  backend:
+  frontend:

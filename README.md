@@ -62,6 +62,16 @@ Modify your [Continue.dev](https://continue.dev/) configuration in `$HOME/.conti
 }
 ```
 
+### Chat-GPU
+
+> Disclaimer: This requires a Cuda capable NVIDIA GPU with drivers setup.
+
+```shell
+make chat-gpu
+```
+
+Leapfrog-UI will be running at `http://localhost:3000/`.
+
 ### Cleanup
 
 When you are done with Tadpole you can run this command to cleanup:
