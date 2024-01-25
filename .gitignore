@@ -130,7 +130,8 @@ celerybeat.pid
 # Environments
 .env
 .venv
-env/
+#env/
+env/env-secrets
 venv/
 ENV/
 env.bak/

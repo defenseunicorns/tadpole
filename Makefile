@@ -105,3 +105,7 @@ persistence-dirs-clean:
 
 persistence-dirs-watch:
 	watch -n 4 tree ${PERSISTENCE_DIR}	
+
+env-init:
+	read -sp "enter OPENAI_API_KEY:" openapi_key && echo "OPENAI_API_KEY=$${openapi_key}" >./env/env-secrets
+	cat ./env/env-secrets	
