@@ -1,0 +1,166 @@
+configs:
+  api-config:
+    file: ./config/config.yaml
+
+x-backend: &backend_default
+  build:
+    context: ./backend/leapfrogai-backend-llama-cpp-python
+  ports:
+    - "50051:50051"
+  hostname: leapfrogai-backend
+  networks:
+    - backend
+  profiles:
+    - chat
+    - code
+    - chat-gpu
+
+x-api: &api_default
+  image: ${PROJECT_NAME}-api
+  container_name: ${PROJECT_NAME}-api
+  build:
+    context: ./api/leapfrogai-api
+    dockerfile: ./Dockerfile
+    tags:
+      - ghcr.io/defenseunicorns/leapfrogai/leapfrogai-api
+  ports:
+    - "8080:8080"
+  hostname: ${PROJECT_NAME}-api
+  networks:
+    - backend
+    - frontend
+  configs:
+    - source: api-config
+      target: /leapfrogai/config.yaml
+      mode: 444
+  env_file:
+    - ./env/env-lfai
+    - ./env/env-chromadb
+    - ./env/env-weaviate
+    - ./env/env-secrets
+  volumes:
+    # - ./config/api/config.yaml:/leapfrogai/config.yaml
+    - ${PERSISTENCE_DIR_MODELS}:/home/nonroot/huggingface/hub/cache
+  profiles:
+    - api
+    - chat
+    - code
+    - chat-gpu
+    - rag
+    - tadpole-rag    
+
+x-frontend: &frontend_default
+  build:
+    context: ./frontend/leapfrog-ui
+  hostname: leapfrog-ui
+  ports:
+    - "3000:3000"
+  networks:
+    - frontend
+  env_file:
+    - ./env/env-demo
+  profiles:
+    - frontend
+    - chat
+    - chat-gpu
+
+x-chromadb: &chromadb_default
+  image: ${PROJECT_NAME}-chromadb
+  container_name: ${PROJECT_NAME}-chromadb
+  env_file:
+    - ./env/env-chromadb
+  build:
+    context: ./backend/leapfrogai-vectordb/images
+    dockerfile: ./chromadb/Dockerfile
+    args:
+      CHROMADB_DATA_PATH: ${CHROMADB_DATA_PATH}
+      CHROMADB_PORT: ${CHROMADB_PORT}
+      WORKDIR: ${WORKDIR}
+    tags:
+      - ghcr.io/defenseunicorns/leapfrogai/leapfrogai-chromadb
+  volumes:
+    - ${PERSISTENCE_DIR_CHROMADB}:${CHROMADB_DATA_PATH}
+  networks:
+    - backend
+  hostname: leapfrog-chromadb
+  ports:
+    - ${CHROMADB_PORT}:${CHROMADB_PORT}
+  profiles:
+    - chromadb
+    - rag    
+    - tadpole-rag
+
+
+x-watchdog: &watchdog_default
+  image: leapfrogai-watchdog
+  container_name: leapfrogai-watchdog
+  env_file:
+    - ./env/env-lfai
+    - ./env/env-chromadb
+    - ./env/env-weaviate
+    - ./env/env-watchdog
+    - ./env/env-secrets
+  build:
+    context: ./images
+    dockerfile: ./watchdog/Dockerfile
+    args:
+      WORKDIR: ${WORKDIR}
+    tags:
+      - ghcr.io/defenseunicorns/leapfrogai/leapfrogai-watchdog
+  networks:
+    - backend
+  volumes:
+    - ${PERSISTENCE_DIR_WATCHDOG}/watch:${WATCHDOG_DATA_PATH}/watch
+    - ${PERSISTENCE_DIR_WATCHDOG}/processed:${WATCHDOG_DATA_PATH}/processed
+  profiles:
+    - watchdog
+
+
+x-weaviate: &weaviate_default
+  command:
+    - --host
+    - 0.0.0.0
+    - --port
+    - '8080'
+    - --scheme
+    - http
+  image: semitechnologies/weaviate:latest
+  container_name: leapfrogai-weaviate
+  ports:
+    - 8080:8080
+    - 50051:50051
+  volumes:
+    - ${PERSISTENCE_DIR_WEAVIATE}:${WEAVIATE_DATA_PATH}
+  restart: on-failure:0
+  environment:
+    QUERY_DEFAULTS_LIMIT: 25
+    AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+    PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+    DEFAULT_VECTORIZER_MODULE: 'none'
+    ENABLE_MODULES: 'text2vec-cohere,text2vec-huggingface,text2vec-palm,text2vec-openai,generative-openai,generative-cohere,generative-palm,ref2vec-centroid,reranker-cohere,qna-openai'
+    CLUSTER_HOSTNAME: 'node1'
+  profiles:
+    - weaviate
+
+services:
+  backend:
+    <<: *backend_default
+
+  api:
+    <<: *api_default
+
+  frontend:
+    <<: *frontend_default
+
+  chromadb:
+    <<: *chromadb_default
+
+  watchdog:
+    <<: *watchdog_default
+
+  weaviate:
+    <<: *weaviate_default
+
+networks:
+  backend:
+  frontend:

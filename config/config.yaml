@@ -1,0 +1,15 @@
+models:
+- name: leapfrogai
+  backend: leapfrogai-backend:50051
+rag:
+  vector_stores:
+    - chromadb
+  file_extensions:
+    - pdf
+    - txt
+  llm:
+    hub: openai
+    model: "gpt-3.5-turbo"
+  embed_model:
+    hub: openai
+    model: "text-embedding-ada-002"  
