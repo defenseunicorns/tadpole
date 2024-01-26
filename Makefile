@@ -82,7 +82,8 @@ clean-unsafe:
 	docker image prune -f
 
 rag-build:
-	env-init
+	make submodules
+	make env-init
 	docker compose -f ./docker-compose.yml --profile rag --verbose  build --no-cache --build-arg ARCH=${ARCH}
 
 rag-up:
