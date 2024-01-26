@@ -82,12 +82,13 @@ clean-unsafe:
 	docker image prune -f
 
 rag-build:
+	make persistence-dirs-create
 	make submodules
 	make env-init
 	docker compose -f ./docker-compose.yml --profile rag --verbose  build --no-cache --build-arg ARCH=${ARCH}
 
 rag-up:
-	make persistence-dirs-create
+	make persistence-dirs-clean
 	make rag-down
 	docker compose -f ./docker-compose.yml --profile rag --verbose up -d
 	watch docker ps -a
