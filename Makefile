@@ -82,6 +82,7 @@ clean-unsafe:
 	docker image prune -f
 
 rag-build:
+	env-init
 	docker compose -f ./docker-compose.yml --profile rag --verbose  build --no-cache --build-arg ARCH=${ARCH}
 
 rag-up:
@@ -107,5 +108,7 @@ persistence-dirs-watch:
 	watch -n 4 tree ${PERSISTENCE_DIR}	
 
 env-init:
-	read -sp "enter OPENAI_API_KEY:" openapi_key && echo "OPENAI_API_KEY=$${openapi_key}" >./env/env-secrets
+	if [ ! -f ./env/env-secrets ]; then \
+		read -sp "enter OPENAI_API_KEY:" openapi_key && echo "OPENAI_API_KEY=$${openapi_key}" >./env/env-secrets; \
+	fi	
 	cat ./env/env-secrets	
