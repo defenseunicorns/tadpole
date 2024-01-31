@@ -54,6 +54,18 @@ chat-gpu-build:
 chat-gpu-up:
 	docker compose -f recipes/chat-gpu/docker-compose.yml up -d
 
+rag-gpu:
+	make submodules
+	make rag-gpu-build
+	make rag-gpu-up
+	echo "RAG-GPU UI running at: $(UI)"
+
+rag-gpu-build:
+	docker compose -f recipes/rag-gpu/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+
+rag-gpu-up:
+	docker compose -f recipes/rag-gpu/docker-compose.yml up -d
+
 docker-compose-down:
 	docker compose -f recipes/chat/docker-compose.yml down
 	docker compose -f recipes/code/docker-compose.yml down

@@ -3,13 +3,13 @@ configs:
     file: ./config.yaml
 
 services:
-  backend:
+  llm-backend:
     build:
       context: ../../backend/leapfrogai-backend-llama-cpp-python
       dockerfile: ../../backend/leapfrogai-backend-llama-cpp-python/Dockerfile.gpu
     ports:
       - "50051:50051"
-    hostname: leapfrogai-backend
+    hostname: leapfrogai-backend-llm
     networks:
       - backend
     deploy:
@@ -20,6 +20,14 @@ services:
               device_ids:
                 - "1"
               capabilities: [gpu]
+  embeddings-backend:
+    build:
+      context: ../../backend/leapfrogai-backend-instructor-xl
+    ports:
+      - "50052:50051"
+    hostname: leapfrogai-backend-embeddings
+    networks:
+      - backend
   api:
     build: ../../api/leapfrogai-api
     ports:

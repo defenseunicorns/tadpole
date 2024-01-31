@@ -1,0 +1,5 @@
+models:
+- name: leapfrogai
+  backend: leapfrogai-backend-llm:50051
+- name: leapfrogai-embeddings
+  backend: leapfrogai-backend-embeddings:50051
