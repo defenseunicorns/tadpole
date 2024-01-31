@@ -17,8 +17,7 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              device_ids:
-                - "1"
+              count: 1
               capabilities: [gpu]
   api:
     build: ../../api/leapfrogai-api
