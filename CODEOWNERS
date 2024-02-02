@@ -3,19 +3,19 @@
 *.md @defenseunicorns/leapfrogai 
 
 # Core Code
-/api/ @gerred @YrrepNoj @gphorvath
-/backend/ @gerred @YrrepNoj @gphorvath
-/frontend/ @gerred @YrrepNoj @gphorvath
+/api/ @defenseunicorns/leapfrogai
+/backend/ @defenseunicorns/leapfrogai
+/frontend/ @defenseunicorns/leapfrogai
 
 # Packaging
-/recipes/ @gerred @YrrepNoj @gphorvath
+/recipes/ @defenseunicorns/leapfrogai
 
 # Pipeline and Project Files
-/Makefile @gerred @YrrepNoj @gphorvath
-/.github/ @gerred @YrrepNoj @gphorvath
-/.gitmodules @gerred @YrrepNoj @gphorvath
+/Makefile @defenseunicorns/leapfrogai
+/.github/ @defenseunicorns/leapfrogai
+/.gitmodules @defenseunicorns/leapfrogai
 
 
 # Additional privileged files
-/CODEOWNERS @jeff-mccoy @mikevanhemert @austenbryan @gerred
+/CODEOWNERS @jeff-mccoy @austenbryan @gerred
 /LICENSE @jeff-mccoy @austenbryan @gerred
