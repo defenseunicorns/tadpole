@@ -61,6 +61,9 @@ rag-gpu:
 	echo "RAG-GPU UI running at: $(UI)"
 
 rag-gpu-build:
+	if ! [ -f backend/leapfrogai-backend-rag/src/.env ]; then \
+		cp backend/leapfrogai-backend-rag/.env.example backend/leapfrogai-backend-rag/src/.env; \
+	fi
 	docker compose -f recipes/rag-gpu/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
 
 rag-gpu-up:

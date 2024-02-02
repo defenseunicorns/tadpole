@@ -19,14 +19,15 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-  embeddings-backend:
+  rag-backend:
     build:
-      context: ../../backend/leapfrogai-backend-instructor-xl
+      context: ../../backend/leapfrogai-backend-rag
     ports:
-      - "50052:50051"
-    hostname: leapfrogai-backend-embeddings
+      - "8000:8000"
+    hostname: leapfrogai-backend-rag
     networks:
       - backend
+      - frontend
   api:
     build: ../../api/leapfrogai-api
     ports:
