@@ -10,3 +10,6 @@
 [submodule "backend/leapfrogai-backend-whisper"]
 	path = backend/leapfrogai-backend-whisper
 	url = https://github.com/defenseunicorns/leapfrogai-backend-whisper.git
+[submodule "backend/leapfrogai-backend-rag"]
+	path = backend/leapfrogai-backend-rag
+	url = git@github.com:defenseunicorns/leapfrogai-backend-rag.git

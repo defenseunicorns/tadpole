@@ -54,11 +54,26 @@ chat-gpu-build:
 chat-gpu-up:
 	docker compose -f recipes/chat-gpu/docker-compose.yml up -d
 
+rag-gpu:
+	make submodules
+	make rag-gpu-build
+	make rag-gpu-up
+	echo "RAG-GPU UI running at: $(UI)"
+
+rag-gpu-build:
+	if ! [ -f backend/leapfrogai-backend-rag/src/.env ]; then \
+		cp backend/leapfrogai-backend-rag/.env.example backend/leapfrogai-backend-rag/src/.env; \
+	fi
+	docker compose -f recipes/rag-gpu/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+
+rag-gpu-up:
+	docker compose -f recipes/rag-gpu/docker-compose.yml up -d
+
 docker-compose-down:
 	docker compose -f recipes/chat/docker-compose.yml down
 	docker compose -f recipes/code/docker-compose.yml down
 	docker compose -f recipes/chat-gpu/docker-compose.yml down
-
+	docker compose -f recipes/rag-gpu/docker-compose.yml down
 
 clean:
 	make docker-compose-down
@@ -70,6 +85,10 @@ clean:
 	docker image rm -f chat-gpu-api 2> /dev/null
 	docker image rm -f code-backend 2> /dev/null
 	docker image rm -f code-api 2> /dev/null
+	docker image rm -f rag-gpu-frontend 2> /dev/null
+	docker image rm -f rag-gpu-llm-backend 2> /dev/null
+	docker image rm -f rag-gpu-embeddings-backend 2> /dev/null
+	docker image rm -f rag-gpu-api 2> /dev/null
 
 clean-unsafe:
 	make docker-compose-down
