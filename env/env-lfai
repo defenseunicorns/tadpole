@@ -1,0 +1,5 @@
+
+export PROJECT_NAME=tadpole
+HUGGINGFACE_HUB_CACHE=/home/nonroot/huggingface/hub/cache
+LFAI_INDEX_NAME="LFAI_index_000"
+LFAI_API_BRANCH=dev-macm-rag-20240111

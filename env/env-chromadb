@@ -1,0 +1,6 @@
+#!/bin/sh
+
+CHROMADB_HOST=${PROJECT_NAME}-chromadb
+export CHROMADB_PORT=8087
+CURRENT_PATH=${PATH}
+export CHROMADB_DATA_PATH=${WORKDIR}/chromadb

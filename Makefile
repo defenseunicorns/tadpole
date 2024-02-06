@@ -1,3 +1,12 @@
+#!/usr/bin/make
+
+SHELL := /bin/bash
+
+include ./env/env-docker
+include ./env/env-chromadb
+include ./env/env-watchdog
+include ./env/env-lfai
+
 ARCH := $(shell uname -m | sed s/aarch64/arm64/ | sed s/x86_64/amd64/)
 UI := http://localhost:3000/
 
@@ -40,25 +49,22 @@ chat-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
 	fi
-	docker compose -f recipes/chat/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+	docker compose -f ./docker-compose.yml --profile chat --verbose build --no-cache --build-arg ARCH=${ARCH}
 
 chat-up:
-	docker compose -f recipes/chat/docker-compose.yml up -d
+	docker compose -f ./docker-compose.yml --profile chat --verbose  up -d
 
 chat-gpu-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
 	fi
-	docker compose -f recipes/chat-gpu/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+	docker compose -f ./docker-compose.yml --profile chat-gpu --verbose  build --no-cache --build-arg ARCH=${ARCH}
 
 chat-gpu-up:
-	docker compose -f recipes/chat-gpu/docker-compose.yml up -d
+	docker compose -f ./docker-compose.yml --profile chat-gpu --verbose up -d
 
 docker-compose-down:
-	docker compose -f recipes/chat/docker-compose.yml down
-	docker compose -f recipes/code/docker-compose.yml down
-	docker compose -f recipes/chat-gpu/docker-compose.yml down
-
+	docker compose -f ./docker-compose.yml --profile chat-gpu down
 
 clean:
 	make docker-compose-down
@@ -74,3 +80,37 @@ clean:
 clean-unsafe:
 	make docker-compose-down
 	docker image prune -f
+
+rag-build:
+	make persistence-dirs-create
+	make submodules
+	make env-init
+	docker compose -f ./docker-compose.yml --profile rag --verbose  build --no-cache --build-arg ARCH=${ARCH}
+
+rag-up:
+	make persistence-dirs-clean
+	make rag-down
+	docker compose -f ./docker-compose.yml --profile rag --verbose up -d
+	watch docker ps -a
+
+rag-down:
+	docker compose -f ./docker-compose.yml --profile rag down
+
+rag-launch:
+	make rag-build
+	make rag-up	
+
+persistence-dirs-create:
+	bin/managedirs
+
+persistence-dirs-clean:
+	bin/managedirs clean
+
+persistence-dirs-watch:
+	watch -n 4 tree ${PERSISTENCE_DIR}	
+
+env-init:
+	if [ ! -f ./env/env-secrets ]; then \
+		read -sp "enter OPENAI_API_KEY:" openapi_key && echo "OPENAI_API_KEY=$${openapi_key}" >./env/env-secrets; \
+	fi	
+	cat ./env/env-secrets	

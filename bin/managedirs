@@ -1,0 +1,83 @@
+#!/bin/bash
+
+op_msg(){
+    op=$1
+    dir=$2
+    if [ "$#" -ne 2 ]
+    then
+        echo "expecting exactly 2 arguments"
+    else
+        echo "$op directory $dir"
+    fi
+}
+
+manage_dir() {
+    dir=$1
+    op=$2
+    
+    if [ "$#" -ne 2 ]
+    then
+        echo "expecting exactly 2 arguments"
+        return 1    
+    elif [ $dir = "/" ]
+    then
+        echo "that's the root directory. shame on you!"
+        return 1
+    fi
+    
+    if [ -d  $dir ]
+    then
+        echo "$dir already exists"
+        if [ $op = "clean" ]
+        then
+            op_msg "cleaning" $dir
+            echo "before clean:"
+            find $dir
+            rm -rf $dir/*            
+        elif [ $op = "find" ]
+        then            
+            find $dir
+        elif [ $op = "mkdir" ]
+        then            
+            x=1
+        else
+            echo "invalid operation: $op"
+        fi
+    else
+        if [ $op = "mkdir" ]
+        then
+            op_msg "making" $dir
+            mkdir -p $dir
+        else
+            echo "invalid operation: $op"
+        fi            
+    fi
+
+    if [ -d  $dir ]
+    then
+        echo "setting permissions on $dir"
+        chown -R ${USER}:docker $dir
+        chmod -R 0777 $dir    
+        echo "after $op"
+        find $dir        
+    fi
+}
+
+source ./env/env-docker
+
+do_op=${1:-mkdir}
+
+dir=${PERSISTENCE_DIR_WEAVIATE}
+manage_dir  $dir $do_op
+
+dir=${PERSISTENCE_DIR_CHROMADB}
+manage_dir  $dir $do_op
+
+dir=${PERSISTENCE_DIR_WATCHDOG}/watch
+manage_dir  $dir $do_op
+
+dir=${PERSISTENCE_DIR_WATCHDOG}/processed
+manage_dir  $dir $do_op
+
+dir=${PERSISTENCE_DIR_MODELS}
+manage_dir  $dir $do_op
