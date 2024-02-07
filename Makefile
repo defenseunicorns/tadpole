@@ -31,7 +31,7 @@ code-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
 	fi
-	docker compose -f recipes/code/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+	docker compose -f recipes/code/docker-compose.yml build --build-arg ARCH=${ARCH}
 
 code-up:
 	docker compose -f recipes/code/docker-compose.yml up -d
@@ -40,7 +40,7 @@ chat-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
 	fi
-	docker compose -f recipes/chat/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+	docker compose -f recipes/chat/docker-compose.yml build --build-arg ARCH=${ARCH}
 
 chat-up:
 	docker compose -f recipes/chat/docker-compose.yml up -d
@@ -49,7 +49,7 @@ chat-gpu-build:
 	if ! [ -f backend/leapfrogai-backend-llama-cpp-python/config.yaml ]; then \
 		cp backend/leapfrogai-backend-llama-cpp-python/config.example.yaml backend/leapfrogai-backend-llama-cpp-python/config.yaml; \
 	fi
-	docker compose -f recipes/chat-gpu/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+	docker compose -f recipes/chat-gpu/docker-compose.yml build --build-arg ARCH=${ARCH}
 
 chat-gpu-up:
 	docker compose -f recipes/chat-gpu/docker-compose.yml up -d
@@ -64,7 +64,7 @@ rag-gpu-build:
 	if ! [ -f backend/leapfrogai-backend-rag/src/.env ]; then \
 		cp backend/leapfrogai-backend-rag/.env.example backend/leapfrogai-backend-rag/src/.env; \
 	fi
-	docker compose -f recipes/rag-gpu/docker-compose.yml build --no-cache --build-arg ARCH=${ARCH}
+	docker compose -f recipes/rag-gpu/docker-compose.yml build --build-arg ARCH=${ARCH}
 
 rag-gpu-up:
 	docker compose -f recipes/rag-gpu/docker-compose.yml up -d
