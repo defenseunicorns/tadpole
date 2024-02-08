@@ -41,8 +41,8 @@ services:
         target: /leapfrogai/config.yaml
         mode: 444
   frontend:
-    build: ../../frontend/leapfrog-ui
-    hostname: leapfrog-ui
+    build: ../../frontend/leapfrogai-ui
+    hostname: leapfrogai-ui
     ports:
       - "3000:3000"
     networks:
